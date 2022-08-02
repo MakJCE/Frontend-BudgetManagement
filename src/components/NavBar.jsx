@@ -1,8 +1,17 @@
 import React from 'react'
+import Logo from './Logo'
+
+const navbarStyle={
+  position: 'absolute',
+  left: '20%',
+  top:'10%'
+}
 
 const NavBar = () => {
   return (
-    <div>NavBar</div>
+    <div style={navbarStyle}>
+      <Logo/>
+    </div>
   )
 }
 
