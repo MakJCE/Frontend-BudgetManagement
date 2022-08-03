@@ -1,8 +1,8 @@
 const login = (values) => {
-     
+    localStorage.setItem('sessionData', values);
 };
-const verifyLoggedIn = (e) => {
-     
+const verifyLoggedIn = () => {
+    return !!localStorage.getItem('sessionData');
 };
 
 const authFetcher = {

@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import Card from '../components/Card';
 import mainStyles from '../mainStyles';
 import Input from '../components/Input';
+import authFetcher from '../fetchs/auth';
 
-const rootStyle = {
-  ...mainStyles.centerBlock,
-  height: '90vh'
-};
 const contentCardStyle = {
   ...mainStyles.centerBlock,
   flexDirection: 'column',
@@ -32,9 +29,12 @@ const LoginPage = () => {
   const onSubmit = (event) => {
     console.table(values);
     event.preventDefault();
+    if(!registerMode){
+      authFetcher.login(values);
+    }
   };
   return (
-    <div style={rootStyle}>
+    <div style={mainStyles.rootStyle}>
       <Card>
         <div >
           <form onSubmit={onSubmit} style={contentCardStyle}>
