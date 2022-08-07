@@ -1,28 +1,24 @@
 import React from 'react';
 import mainStyles from '../mainStyles';
-import { useNavigate } from 'react-router-dom';
 
-const containerStyle = {
-  ...mainStyles.centerBlock,
-  background: '#FFFFFF',
-  border: '1px solid #C0C0C0',
-  borderRadius: '5px',
+const nonSelectedStyle ={
+  ...mainStyles.containerStyle,
   width: '54px',
   height: '54px',
   cursor:'pointer'
 };
+
 const selectedStyle = {
-  ...containerStyle,
+  ...nonSelectedStyle,
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
 };
 
-const NavElement = ({ Icon, label, isSelected = false, url }) => {
-    const navigate = useNavigate();
+const NavElement = ({ Icon, label, isSelected = false, onClick }) => {
   return (
     <div
-      style={{ ...(isSelected ? selectedStyle : containerStyle) }}
+      style={{ ...(isSelected ? selectedStyle : nonSelectedStyle) }}
       title={label}
-      onClick={()=>navigate(url)}
+      onClick={onClick}
     >
       {<Icon color={isSelected? '#5544F2':'#44EBF2'}/>}
     </div>

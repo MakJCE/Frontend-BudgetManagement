@@ -3,6 +3,7 @@ import Card from '../components/Card';
 import mainStyles from '../mainStyles';
 import Input from '../components/Input';
 import authFetcher from '../fetchs/auth';
+import {useNavigate} from 'react-router-dom'
 
 const contentCardStyle = {
   ...mainStyles.centerBlock,
@@ -23,6 +24,7 @@ const registerFields = [
 const LoginPage = () => {
   const [registerMode, setRegisterMode] = useState(false);
   const [values, setValues] = useState({});
+  const nvigate = useNavigate();
   const onChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -32,6 +34,7 @@ const LoginPage = () => {
     if(!registerMode){
       authFetcher.login(values);
     }
+    nvigate('/');
   };
   return (
     <div style={mainStyles.rootStyle}>

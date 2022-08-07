@@ -8,6 +8,7 @@ import NavElement from './NavElement';
 import DashboardIcon from './jsxIcons/DashboardIcon';
 import AccountsIcon from './jsxIcons/AccountsIcon';
 import TransferIcon from './jsxIcons/TransferIcon';
+import LogoutIcon from './jsxIcons/LogoutIcon';
 
 const navbarStyle = {
   position: 'absolute',
@@ -19,7 +20,7 @@ const tagsStyle = {
   ...mainStyles.centerBlock,
   flexDirection: 'column',
   gap: '20px',
-  marginTop: '40px',
+  marginTop: '40px'
 };
 
 const tags = [
@@ -52,10 +53,21 @@ const NavBar = () => {
               label={tag.label}
               Icon={tag.icon}
               isSelected={location === tag.url}
-              url={tag.url}
+              onClick={() => navigate(tag.url)}
             />
           );
         })}
+        <NavElement
+          key={`tg-logoutbtn`}
+          label={'Logout'}
+          Icon={LogoutIcon}
+          isSelected={location === '/login'}
+          onClick={() => {
+            authFetcher.logout();
+            navigate('/login');
+
+          }}
+        />
       </div>
     </div>
   );
