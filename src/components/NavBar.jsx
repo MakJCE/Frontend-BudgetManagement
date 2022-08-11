@@ -6,7 +6,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import NavElement from './NavElement';
 //icons
 import DashboardIcon from './jsxIcons/DashboardIcon';
-import AccountsIcon from './jsxIcons/AccountsIcon';
 import TransferIcon from './jsxIcons/TransferIcon';
 import LogoutIcon from './jsxIcons/LogoutIcon';
 
@@ -25,7 +24,6 @@ const tagsStyle = {
 
 const tags = [
   { label: 'Dashboard', icon: DashboardIcon, url: '/' },
-  { label: 'Accounts', icon: AccountsIcon, url: '/accounts' },
   { label: 'Transfers', icon: TransferIcon, url: '/transfers' }
 ];
 

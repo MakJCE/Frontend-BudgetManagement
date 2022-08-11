@@ -1,26 +1,35 @@
-import React from 'react'
-import Account from './Account'
-import mainStyles from '../mainStyles'
+import React, { useEffect } from 'react';
+import Account from './Account';
+import mainStyles from '../mainStyles';
+//reduxjs
+import { useSelector, useDispatch } from 'react-redux';
+import { setBankAccounts } from '../slicers/bankAccountSlice';
 
 const listStyle = {
-    ...mainStyles.centerBlock,
-    gap:'10px'
-}
+  ...mainStyles.centerBlock,
+  gap: '10px'
+};
 
-const accounts=[
-    {id: 1, bankName: 'Banco Bisa', accountType: 'Credit Card'},
-    {id: 2, bankName: 'Banco Bisa', accountType: 'Credit Card'},
-    {id: 3, bankName: 'Banco Bisa', accountType: 'Credit Card'},
-]
+const _accounts = [
+  { id: 1, bankName: 'Banco Bisa', accountType: 'Credit Card' },
+  { id: 2, bankName: 'Banco Bisa', accountType: 'Credit Card' },
+  { id: 3, bankName: 'Banco Bisa', accountType: 'Credit Card' }
+];
 
 const AccountsList = () => {
+  const dispatch = useDispatch();
+  const accounts = useSelector((state)=> state.bankAccounts.accounts)
+  useEffect(() => {
+    dispatch(setBankAccounts(_accounts));
+  }, [dispatch]);
+
   return (
     <div style={listStyle}>
-        { accounts.map((account, index) => {
-            return <Account key={index} account={account}/>
-        })}
+      {accounts.map((account, index) => {
+        return <Account key={index} account={account} />;
+      })}
     </div>
-  )
-}
+  );
+};
 
-export default AccountsList
+export default AccountsList;
