@@ -5,6 +5,8 @@ import mainStyles from '../mainStyles.jsx';
 import { useNavigate, useLocation } from 'react-router-dom';
 import NavElement from './NavElement';
 import useWindowSize from '../useWindowHook';
+//redux
+import { useSelector } from 'react-redux';
 //icons
 import DashboardIcon from './jsxIcons/DashboardIcon';
 import TransferIcon from './jsxIcons/TransferIcon';
@@ -21,7 +23,6 @@ const navbarResponsive = {
   left: '10px',
   top: '10%'
 };
-
 const tagsStyle = {
   ...mainStyles.centerBlock,
   flexDirection: 'column',
@@ -33,7 +34,6 @@ const tagsResponsive = {
   flexDirection: 'row',
   display: 'inline'
 };
-
 const userAccountStyle={
   ...mainStyles.centerBlock,
   flexDirection: 'column',
@@ -46,6 +46,7 @@ const tags = [
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const username = useSelector((state)=> state.sessionData.username)
   const location = useLocation().pathname;
   const windowSize = useWindowSize();
   useEffect(() => {
@@ -64,7 +65,7 @@ const NavBar = () => {
       >
         <div style={userAccountStyle}>
           <AccountIcon />
-          username
+          {username}
         </div>
         {tags.map((tag, index) => {
           return (

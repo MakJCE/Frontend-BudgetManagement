@@ -3,7 +3,10 @@ import Card from '../components/Card';
 import mainStyles from '../mainStyles';
 import Input from '../components/Input';
 import authFetcher from '../fetchs/auth';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+//reduxjs
+import { useDispatch } from 'react-redux';
+import { setSessionData } from '../slicers/sessionDataSlice';
 
 const contentCardStyle = {
   ...mainStyles.centerBlock,
@@ -18,10 +21,11 @@ const loginFields = [
 const registerFields = [
   { name: 'username', type: 'text' },
   { name: 'password', type: 'password' },
-  { name: 'confirm password', type: 'password' },
+  { name: 'confirm password', type: 'password' }
 ];
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const [registerMode, setRegisterMode] = useState(false);
   const [values, setValues] = useState({});
   const nvigate = useNavigate();
@@ -31,33 +35,49 @@ const LoginPage = () => {
   const onSubmit = (event) => {
     console.table(values);
     event.preventDefault();
-    if(!registerMode){
+    if (!registerMode) {
       authFetcher.login(values);
+      dispatch(setSessionData(values));
     }
     nvigate('/');
   };
   return (
     <div style={mainStyles.rootStyle}>
       <Card>
-        <div >
+        <div>
           <form onSubmit={onSubmit} style={contentCardStyle}>
-            {(registerMode? registerFields : loginFields).map((f, index) => {
+            {(registerMode ? registerFields : loginFields).map((f, index) => {
               return (
                 <Input
                   key={`lf-${index}`}
                   name={f.name}
-                  value={values[f.name]||''}
+                  value={values[f.name] || ''}
                   label={f.name}
                   inputType={f.type}
                   onChange={onChange}
                 />
               );
             })}
-            <input type="submit" value={registerMode?"Register":"Login"} />
-            {registerMode ?
-              <nav style={{...mainStyles.linkStyle}} onClick={() => {setRegisterMode(false)}}>Login</nav> :
-              <nav style={{...mainStyles.linkStyle}} onClick={() => {setRegisterMode(true)}}>Register</nav> 
-            }
+            <input type="submit" value={registerMode ? 'Register' : 'Login'} />
+            {registerMode ? (
+              <nav
+                style={{ ...mainStyles.linkStyle }}
+                onClick={() => {
+                  setRegisterMode(false);
+                }}
+              >
+                Login
+              </nav>
+            ) : (
+              <nav
+                style={{ ...mainStyles.linkStyle }}
+                onClick={() => {
+                  setRegisterMode(true);
+                }}
+              >
+                Register
+              </nav>
+            )}
           </form>
         </div>
       </Card>

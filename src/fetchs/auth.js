@@ -1,11 +1,13 @@
 const login = (values) => {
-    localStorage.setItem('sessionData', values);
+    localStorage.setItem('username', values.username);
+    localStorage.setItem('password', values.password);
 };
 const logout = () => {
-    localStorage.removeItem('sessionData');
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
 };
 const verifyLoggedIn = () => {
-    return !!localStorage.getItem('sessionData');
+    return !!localStorage.getItem('username')&& !!localStorage.getItem('password');
 };
 
 const authFetcher = {
