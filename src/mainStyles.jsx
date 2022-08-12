@@ -17,7 +17,7 @@ const containerStyle = {
 
 const rootStyle = {
   ...centerBlock,
-  height: '90vh'
+  marginTop:'10%'
 };
 
 const pageContainerStyle = {

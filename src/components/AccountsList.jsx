@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import Account from './Account';
 import mainStyles from '../mainStyles';
+import AddBankAccount from './AddBankAccount'
 //reduxjs
 import { useSelector, useDispatch } from 'react-redux';
 import { setBankAccounts } from '../slicers/bankAccountSlice';
 
 const listStyle = {
   ...mainStyles.centerBlock,
+  flexWrap: 'wrap',
   gap: '10px'
 };
 
@@ -28,6 +30,7 @@ const AccountsList = () => {
       {accounts.map((account, index) => {
         return <Account key={index} account={account} />;
       })}
+      <AddBankAccount/>
     </div>
   );
 };

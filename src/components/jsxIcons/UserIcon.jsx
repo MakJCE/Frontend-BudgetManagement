@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AccountsIcon = ({ color = '#000000' }) => {
+const UserIcon = ({color = '#000000'}) => {
   return (
     <div>
       <svg
@@ -19,4 +19,4 @@ const AccountsIcon = ({ color = '#000000' }) => {
   );
 };
 
-export default AccountsIcon;
+export default UserIcon;
