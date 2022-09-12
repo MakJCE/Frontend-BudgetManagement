@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-    username: localStorage.getItem('username') || '',
-    password: localStorage.getItem('password') || ''
+    person: {},
+    token: ''
 }
 
 export const sessionDataSlice = createSlice({
@@ -10,8 +10,8 @@ export const sessionDataSlice = createSlice({
     initialState,
     reducers:{
         setSessionData: (state, action)=>{
-            state.username = action.payload.username;
-            state.password = action.payload.password;
+            state.person = action.payload.person??state.person;
+            state.token = action.payload.token??state.token;
         }
     }
 })

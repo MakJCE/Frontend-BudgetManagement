@@ -1,7 +1,8 @@
 import React from 'react';
 import mainStyles from '../mainStyles';
-import AccountsList from '../components/AccountsList'
+import AccountsList from '../components/AccountsList';
 import useWindowSize from '../useWindowHook';
+import AddExpenseIncome from '../components/AddExpenseIncome';
 
 const subtitleStyle = {
   fontStyle: 'normal',
@@ -12,13 +13,19 @@ const subtitleStyle = {
 
 const Dashboard = () => {
   const windowSize = useWindowSize();
-  const rootStyle = {...mainStyles.rootStyle, marginTop:(windowSize.width<600)? '60%': (windowSize.width<840)? '35%':'10%' }
+  const rootStyle = {
+    ...mainStyles.rootStyle,
+    marginTop:
+      windowSize.width < 600 ? '60%' : windowSize.width < 840 ? '35%' : '10%'
+  };
   return (
     <div style={rootStyle}>
       <div style={mainStyles.pageContainerStyle}>
         <p style={mainStyles.titleStyle}>Dashboard</p>
         <p style={subtitleStyle}>Accounts</p>
-        <AccountsList/>
+        <AccountsList />
+        <p style={subtitleStyle}>Expenses & Incomes</p>
+        <AddExpenseIncome />
       </div>
     </div>
   );

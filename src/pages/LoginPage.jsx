@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import Card from '../components/Card';
 import mainStyles from '../mainStyles';
-import Input from '../components/Input';
+import Form from '../components/Form/Form';
+import {
+  loginFields,
+  registerFields
+} from '../components/formsFields/authFields';
 import authFetcher from '../fetchs/auth';
 import { useNavigate } from 'react-router-dom';
+// Cookies
+import { useCookies } from 'react-cookie';
 //reduxjs
 import { useDispatch } from 'react-redux';
 import { setSessionData } from '../slicers/sessionDataSlice';
@@ -14,71 +20,63 @@ const contentCardStyle = {
   gap: '30px'
 };
 
-const loginFields = [
-  { name: 'username', type: 'text' },
-  { name: 'password', type: 'password' }
-];
-const registerFields = [
-  { name: 'username', type: 'text' },
-  { name: 'password', type: 'password' },
-  { name: 'confirm password', type: 'password' }
-];
-
 const LoginPage = () => {
+  const [, setCookie] = useCookies(['user']);
   const dispatch = useDispatch();
   const [registerMode, setRegisterMode] = useState(false);
-  const [values, setValues] = useState({});
-  const nvigate = useNavigate();
-  const onChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
-  const onSubmit = (event) => {
-    console.table(values);
-    event.preventDefault();
+  const navigate = useNavigate();
+  const onSubmit = async (values) => {
     if (!registerMode) {
-      authFetcher.login(values);
-      dispatch(setSessionData(values));
+      authFetcher
+        .login(values, setCookie, (data) => {
+          dispatch(setSessionData(data));
+        })
+        .then(() => {
+          navigate('/');
+        })
+        .catch(() => {
+          alert('Username or Password incorrect.');
+        });
+    } else {
+      authFetcher
+        .register(values)
+        .then(() => {
+          alert('User registered successfully.');
+          window.location.reload();
+        })
+        .catch(() => {
+          alert('Something went wrong.');
+        });
     }
-    nvigate('/');
   };
   return (
     <div style={mainStyles.rootStyle}>
       <Card>
-        <div>
-          <form onSubmit={onSubmit} style={contentCardStyle}>
-            {(registerMode ? registerFields : loginFields).map((f, index) => {
-              return (
-                <Input
-                  key={`lf-${index}`}
-                  name={f.name}
-                  value={values[f.name] || ''}
-                  label={f.name}
-                  inputType={f.type}
-                  onChange={onChange}
-                />
-              );
-            })}
-            <input type="submit" value={registerMode ? 'Register' : 'Login'} />
-            {registerMode ? (
-              <nav
-                style={{ ...mainStyles.linkStyle }}
-                onClick={() => {
-                  setRegisterMode(false);
-                }}
-              >
-                Login
-              </nav>
-            ) : (
-              <nav
-                style={{ ...mainStyles.linkStyle }}
-                onClick={() => {
-                  setRegisterMode(true);
-                }}
-              >
-                Register
-              </nav>
-            )}
-          </form>
+        <div style={contentCardStyle}>
+          <Form
+            fields={registerMode ? registerFields : loginFields}
+            handleOnSubmit={onSubmit}
+            submitButtonLabel={registerMode ? 'Register' : 'Login'}
+          />
+          {registerMode ? (
+            <nav
+              style={{ ...mainStyles.linkStyle }}
+              onClick={() => {
+                setRegisterMode(false);
+              }}
+            >
+              Login
+            </nav>
+          ) : (
+            <nav
+              style={{ ...mainStyles.linkStyle }}
+              onClick={() => {
+                setRegisterMode(true);
+              }}
+            >
+              Not have account? Register
+            </nav>
+          )}
         </div>
       </Card>
     </div>

@@ -13,7 +13,7 @@ const containerStyle = {
 const Account = ({ account }) => {
   return (
     <div style={containerStyle}>
-      <BankAccountIcon />
+      <BankAccountIcon color={'#5544F2'} />
       <div style={{lineHeight:'5px'}}>
         <p>{account.bankName}</p>
         <p>{account.accountType}</p>

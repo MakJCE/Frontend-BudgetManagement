@@ -5,8 +5,11 @@ import mainStyles from '../mainStyles.jsx';
 import { useNavigate, useLocation } from 'react-router-dom';
 import NavElement from './NavElement';
 import useWindowSize from '../useWindowHook';
+//Cookies
+import { useCookies } from 'react-cookie';
 //redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSessionData } from '../slicers/sessionDataSlice';
 //icons
 import DashboardIcon from './jsxIcons/DashboardIcon';
 import TransferIcon from './jsxIcons/TransferIcon';
@@ -34,62 +37,70 @@ const tagsResponsive = {
   flexDirection: 'row',
   display: 'inline'
 };
-const userAccountStyle={
+const userAccountStyle = {
   ...mainStyles.centerBlock,
-  flexDirection: 'column',
-}
+  flexDirection: 'column'
+};
 
 const tags = [
   { label: 'Dashboard', icon: DashboardIcon, url: '/' },
-  { label: 'Transfers', icon: TransferIcon, url: '/transfers' }
+  { label: 'Expenses & Incomes', icon: TransferIcon, url: '/history' }
 ];
 
-const NavBar = () => {
+const NavBar = ({ body }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const person = useSelector((state) => state.sessionData.person);
   const navigate = useNavigate();
-  const username = useSelector((state)=> state.sessionData.username)
-  const location = useLocation().pathname;
+  const dispatch = useDispatch();
   const windowSize = useWindowSize();
+  const location = useLocation().pathname;
   useEffect(() => {
-    if (!authFetcher.verifyLoggedIn() && location !== '/login') {
+    if (!authFetcher.verifyLoggedIn(cookies) && location !== '/login') {
       navigate('/login');
     }
-  }, [navigate, location]);
+    authFetcher.getUserData(cookies.token).then((userData) => {
+      dispatch(setSessionData({person: userData}));
+    });
+  }, [navigate, location, cookies, dispatch]);
   return (
-    <div style={windowSize.width < 1200 ? navbarResponsive : navbarStyle}>
-      <Logo />
-      <div
-        style={{
-          ...(windowSize.width < 840 ? tagsResponsive : tagsStyle),
-          display: location === '/login' ? 'none' : 'flex'
-        }}
-      >
-        <div style={userAccountStyle}>
-          <AccountIcon />
-          {username}
-        </div>
-        {tags.map((tag, index) => {
-          return (
-            <NavElement
-              key={`tg-${index}`}
-              label={tag.label}
-              Icon={tag.icon}
-              isSelected={location === tag.url}
-              onClick={() => navigate(tag.url)}
-            />
-          );
-        })}
-        <NavElement
-          key={`tg-logoutbtn`}
-          label={'Logout'}
-          Icon={LogoutIcon}
-          isSelected={location === '/login'}
-          onClick={() => {
-            authFetcher.logout();
-            navigate('/login');
+    <>
+      <div style={windowSize.width < 1200 ? navbarResponsive : navbarStyle}>
+        <Logo />
+        <div
+          style={{
+            ...(windowSize.width < 840 ? tagsResponsive : tagsStyle),
+            display: location === '/login' ? 'none' : 'flex'
           }}
-        />
+        >
+          <div style={userAccountStyle}>
+            <AccountIcon color={'#5544F2'} />
+            {person?.username}
+          </div>
+          {tags.map((tag, index) => {
+            return (
+              <NavElement
+                key={`tg-${index}`}
+                label={tag.label}
+                Icon={tag.icon}
+                isSelected={location === tag.url}
+                onClick={() => navigate(tag.url)}
+              />
+            );
+          })}
+          <NavElement
+            key={`tg-logoutbtn`}
+            label={'Logout'}
+            Icon={LogoutIcon}
+            isSelected={location === '/login'}
+            onClick={() => {
+              authFetcher.logout(removeCookie, setCookie);
+              navigate('/login');
+            }}
+          />
+        </div>
       </div>
-    </div>
+      {body}
+    </>
   );
 };
 

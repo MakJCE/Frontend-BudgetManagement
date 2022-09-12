@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import Account from './Account';
 import mainStyles from '../mainStyles';
-import AddBankAccount from './AddBankAccount'
+import AddBankAccount from './AddBankAccount';
+import bankAccountFetcher from '../fetchs/bankAccount';
+//Cookies
+import { useCookies } from 'react-cookie';
 //reduxjs
 import { useSelector, useDispatch } from 'react-redux';
 import { setBankAccounts } from '../slicers/bankAccountSlice';
@@ -12,17 +15,14 @@ const listStyle = {
   gap: '10px'
 };
 
-const _accounts = [
-  { id: 1, bankName: 'Banco Bisa', accountType: 'Credit Card' },
-  { id: 2, bankName: 'Banco Bisa', accountType: 'Credit Card' },
-  { id: 3, bankName: 'Banco Bisa', accountType: 'Credit Card' }
-];
-
 const AccountsList = () => {
   const dispatch = useDispatch();
-  const accounts = useSelector((state)=> state.bankAccounts.accounts)
+  const [cookies] = useCookies(['user']);
+  const accounts = useSelector((state) => state.bankAccounts.accounts);
   useEffect(() => {
-    dispatch(setBankAccounts(_accounts));
+    bankAccountFetcher.getAllAccounts(cookies.token).then((_accounts) => {
+      dispatch(setBankAccounts(_accounts));
+    });
   }, [dispatch]);
 
   return (
@@ -30,7 +30,7 @@ const AccountsList = () => {
       {accounts.map((account, index) => {
         return <Account key={index} account={account} />;
       })}
-      <AddBankAccount/>
+      <AddBankAccount />
     </div>
   );
 };

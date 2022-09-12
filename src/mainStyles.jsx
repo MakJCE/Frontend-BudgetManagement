@@ -25,7 +25,7 @@ const pageContainerStyle = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
-  width: '70vh',
+  width: '80vh',
   height: '50vh'
 }
 
