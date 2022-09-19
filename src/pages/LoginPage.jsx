@@ -21,7 +21,7 @@ const contentCardStyle = {
 };
 
 const LoginPage = () => {
-  const [, setCookie] = useCookies(['user']);
+  const [, setCookie] = useCookies(['token']);
   const dispatch = useDispatch();
   const [registerMode, setRegisterMode] = useState(false);
   const navigate = useNavigate();

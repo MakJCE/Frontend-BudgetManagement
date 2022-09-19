@@ -48,7 +48,7 @@ const tags = [
 ];
 
 const NavBar = ({ body }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const person = useSelector((state) => state.sessionData.person);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,10 +57,13 @@ const NavBar = ({ body }) => {
   useEffect(() => {
     if (!authFetcher.verifyLoggedIn(cookies) && location !== '/login') {
       navigate('/login');
+    } else {
+      if (location !== '/login') {
+        authFetcher.getUserData(cookies.token).then((userData) => {
+          dispatch(setSessionData({ person: userData }));
+        });
+      }
     }
-    authFetcher.getUserData(cookies.token).then((userData) => {
-      dispatch(setSessionData({person: userData}));
-    });
   }, [navigate, location, cookies, dispatch]);
   return (
     <>

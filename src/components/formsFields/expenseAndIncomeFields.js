@@ -10,16 +10,16 @@ const fields = [
     validate: (val) => {
       return !!val &&val!==0;
     },
-    aclaration: 'El campo es requerido'
+    aclaration: 'Required field'
   },
   {
     name: 'accountNumber',
-    label: 'Número de cuenta',
+    label: 'Account number',
     type: 'number',
     validate: (val) => {
       return !!val;
     },
-    aclaration: 'El campo es requerido'
+    aclaration: 'Required field'
   }
 ];
 

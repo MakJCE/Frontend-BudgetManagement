@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import mainStyles from '../mainStyles';
 import Form from './Form/Form';
-import fields from './formsFields/bankAccountFields';
+import getBankAccountFields from './formsFields/bankAccountFields';
 import bankAccountFetcher from '../fetchs/bankAccount';
 //reduxjs
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addAccount } from '../slicers/bankAccountSlice';
 //Cookies
 import { useCookies } from 'react-cookie';
@@ -23,10 +23,13 @@ const formStyle = {
 };
 
 const AddBankAccount = () => {
-  const [cookies] = useCookies(['user']);
-  const [showForm, setShowForm] = useState();
+  const [cookies] = useCookies(['token']);
+  const [showForm, setShowForm] = useState(false);
+  const badgesList = useSelector((state) => state.badges.badgesList);
   const dispatch = useDispatch();
   const handleSubmit = (values) => {
+    values.founds = 0;
+    console.log(values);
     dispatch(addAccount(values));
     bankAccountFetcher
       .createAccount(values, cookies.token)
@@ -49,7 +52,7 @@ const AddBankAccount = () => {
       </div>
       <div style={showForm ? formStyle : { display: 'none' }}>
         <Form
-          fields={fields}
+          fields={getBankAccountFields(badgesList)}
           handleOnSubmit={handleSubmit}
           submitButtonLabel="Añadir"
         />

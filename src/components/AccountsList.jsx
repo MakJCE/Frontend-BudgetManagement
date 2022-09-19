@@ -17,13 +17,13 @@ const listStyle = {
 
 const AccountsList = () => {
   const dispatch = useDispatch();
-  const [cookies] = useCookies(['user']);
+  const [cookies] = useCookies(['token']);
   const accounts = useSelector((state) => state.bankAccounts.accounts);
   useEffect(() => {
     bankAccountFetcher.getAllAccounts(cookies.token).then((_accounts) => {
       dispatch(setBankAccounts(_accounts));
     });
-  }, [dispatch]);
+  }, [dispatch, cookies.token]);
 
   return (
     <div style={listStyle}>
