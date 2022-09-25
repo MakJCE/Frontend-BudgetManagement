@@ -23,6 +23,7 @@ const rootStyle = {
 const pageContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
+  gap:'15px',
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
   width: '80vh',

@@ -54,7 +54,7 @@ const AddBankAccount = () => {
         <Form
           fields={getBankAccountFields(badgesList)}
           handleOnSubmit={handleSubmit}
-          submitButtonLabel="Añadir"
+          submitButtonLabel="Add"
         />
       </div>
     </div>

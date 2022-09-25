@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import mainStyles from '../mainStyles';
 import Form from './Form/Form';
-import getMovementsFields from './formsFields/expenseAndIncomeFields';
+import getTransfersFields from './formsFields/transfersFields';
 import movementFetcher from '../fetchs/movement';
 //reduxjs
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,26 +22,25 @@ const formStyle = {
   ...mainStyles.containerStyle
 };
 
-const AddExpenseIncome = () => {
+const AddTransfer = () => {
   const [cookies] = useCookies(['token']);
   const [showForm, setShowForm] = useState();
   const badgesList = useSelector((state) => state.badges.badgesList);
   const accounts = useSelector((state) => state.bankAccounts.accounts);
-  const categories = useSelector((state) => state.categories.categories);
   const dispatch = useDispatch();
   const handleSubmit = (values) => {
     values.date = new Date();
     console.log(values);
     dispatch(addMovement(values));
-    movementFetcher
-      .createMovement(values, cookies.token)
-      .then(() => {
-        alert(`${values.type} created successfully.`);
-        window.location.reload();
-      })
-      .catch((err) => {
-        alert('Something went wrong.');
-      });
+    // movementFetcher
+    //   .createMovement(values, cookies.token)
+    //   .then(() => {
+    //     alert(`${values.type} created successfully.`);
+    //     window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //     alert('Something went wrong.');
+    //   });
   };
   return (
     <div>
@@ -51,11 +50,11 @@ const AddExpenseIncome = () => {
           setShowForm(!showForm);
         }}
       >
-        <AddIcon color={'#5544F2'} /> Add Expense & Income
+        <AddIcon color={'#5544F2'} /> Add Transfer
       </div>
       <div style={showForm ? formStyle : { display: 'none' }}>
         <Form
-          fields={getMovementsFields(badgesList, accounts, categories)}
+          fields={getTransfersFields(badgesList, accounts)}
           handleOnSubmit={handleSubmit}
           submitButtonLabel="Add"
         />
@@ -64,4 +63,4 @@ const AddExpenseIncome = () => {
   );
 };
 
-export default AddExpenseIncome;
+export default AddTransfer;

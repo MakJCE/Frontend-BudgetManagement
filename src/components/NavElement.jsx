@@ -20,7 +20,7 @@ const NavElement = ({ Icon, label, isSelected = false, onClick }) => {
       title={label}
       onClick={onClick}
     >
-      {<Icon color={isSelected? '#5544F2':'#44EBF2'}/>}
+      {<Icon color={isSelected? '#5544F2':'#31AEB3'}/>}
     </div>
   );
 };
