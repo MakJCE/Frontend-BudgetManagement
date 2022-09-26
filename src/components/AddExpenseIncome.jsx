@@ -36,7 +36,7 @@ const AddExpenseIncome = () => {
     movementFetcher
       .createMovement(values, cookies.token)
       .then(() => {
-        alert(`${values.type} created successfully.`);
+        alert(`${values.type} added successfully.`);
         window.location.reload();
       })
       .catch((err) => {

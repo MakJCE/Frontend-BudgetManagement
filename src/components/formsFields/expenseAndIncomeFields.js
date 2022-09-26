@@ -51,9 +51,20 @@ const getMovementsFields = (badges, bankAccounts, categories) => {
       label: 'Monto',
       type: 'number',
       validate: (val) => {
-        return !!val;
+        let type = document.querySelector('select[name=type]').value;
+        let selected = document.querySelector(
+          'select[name=BankAccountId]'
+        ).value;
+        let account = bankAccounts.find((b) => b.id === parseInt(selected));
+        console.log(type, account)
+        return (
+          !!parseInt(val) &&
+          (type === 'expense'
+            ? parseInt(val) <= account.founds
+            : true)
+        );
       },
-      aclaration: 'Required field'
+      aclaration: 'Required field less than founds'
     },
     {
       name: 'BadgeId',

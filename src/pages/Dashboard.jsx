@@ -3,6 +3,7 @@ import mainStyles from '../mainStyles';
 import AccountsList from '../components/AccountsList';
 import useWindowSize from '../useWindowHook';
 import AddExpenseIncome from '../components/AddExpenseIncome';
+import AddTransfer from '../components/AddTransfer';
 import generalFetcher from '../fetchs/general';
 import bankAccountFetcher from '../fetchs/bankAccount';
 //Cookies
@@ -48,6 +49,8 @@ const Dashboard = () => {
         <AccountsList />
         <p style={subtitleStyle}>Expenses & Incomes</p>
         <AddExpenseIncome />
+        <p style={subtitleStyle}>Transfers</p>
+        <AddTransfer />
       </div>
     </div>
   );

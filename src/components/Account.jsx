@@ -9,22 +9,23 @@ const containerStyle = {
   justifyContent: 'space-around',
   padding: '10px',
   minWidth: '250px',
-  gap:'10px'
+  gap: '10px'
 };
 
 const Account = ({ account }) => {
   const badgesList = useSelector((state) => state.badges.badgesList);
   const getBadgeSymbol = (id) => {
     return badgesList.find((badge) => badge.id === id).symbol;
-  }
+  };
   return (
     <div style={containerStyle}>
       <BankAccountIcon color={'#5544F2'} />
-      <div style={{lineHeight:'5px'}}>
-        <p style={{fontWeight:'600'}}>{account.bankName}</p>
-        <p style={{color:'#31AEB3'}}>{account.accountType}</p>
+      <div style={{ lineHeight: '5px' }}>
+        <p style={{ fontWeight: '600' }}>{account.bankName}</p>
+        <p style={{ color: '#31AEB3' }}>{account.accountType}</p>
       </div>
       <div>
+        <span style={{fontSize: '22px'}}>{account.founds}</span>
         {getBadgeSymbol(account.BadgeId)}
       </div>
     </div>

@@ -4,6 +4,7 @@ import bankAccountReducer from '../slicers/bankAccountSlice';
 import sessionDataReducer from '../slicers/sessionDataSlice';
 import badgeReducer from '../slicers/badgeSlice';
 import categoryReducer from '../slicers/categorySlice';
+import transferReducer from '../slicers/transferSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     movements: movementReducer,
     sessionData: sessionDataReducer,
     badges: badgeReducer,
-    categories: categoryReducer
+    categories: categoryReducer,
+    transfers: transferReducer
   }
 });

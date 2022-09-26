@@ -11,7 +11,8 @@ const getTransfersFields = (badges, bankAccounts) => {
         type: 'select',
         options: _bankAccounts,
         validate: (val) => {
-          return !!val;
+          console.log(val)
+          return !!parseInt(val);
         },
         aclaration: 'Required field'
       },
@@ -21,18 +22,21 @@ const getTransfersFields = (badges, bankAccounts) => {
         type: 'select',
         options: _bankAccounts,
         validate: (val) => {
-          return !!val;
+          let senderVal = parseInt(document.querySelector('select[name=senderAccount]').value);
+          return !!parseInt(val) && parseInt(val)!==senderVal;
         },
-        aclaration: 'Required field'
+        aclaration: 'Required field not same sender'
       },
       {
         name: 'amount',
         label: 'Monto',
         type: 'number',
         validate: (val) => {
-          return !!val;
+          let senderVal = parseInt(document.querySelector('select[name=senderAccount]').value);
+          let senderAccount = bankAccounts.find(b=>b.id === senderVal);
+          return !!parseInt(val) && parseInt(val) <= senderAccount?.founds;
         },
-        aclaration: 'Required field'
+        aclaration: 'Required field less than founds'
       },
       {
         name: 'BadgeId',

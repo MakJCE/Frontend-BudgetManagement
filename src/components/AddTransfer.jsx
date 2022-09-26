@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import mainStyles from '../mainStyles';
 import Form from './Form/Form';
 import getTransfersFields from './formsFields/transfersFields';
-import movementFetcher from '../fetchs/movement';
+import transferFetcher from '../fetchs/transfer';
 //reduxjs
 import { useSelector, useDispatch } from 'react-redux';
-import { addMovement } from '../slicers/movementSlice';
+import { addTransfer } from '../slicers/transferSlice';
 //Cookies
 import { useCookies } from 'react-cookie';
 //icons
@@ -31,16 +31,16 @@ const AddTransfer = () => {
   const handleSubmit = (values) => {
     values.date = new Date();
     console.log(values);
-    dispatch(addMovement(values));
-    // movementFetcher
-    //   .createMovement(values, cookies.token)
-    //   .then(() => {
-    //     alert(`${values.type} created successfully.`);
-    //     window.location.reload();
-    //   })
-    //   .catch((err) => {
-    //     alert('Something went wrong.');
-    //   });
+    dispatch(addTransfer(values));
+    transferFetcher
+      .createTransfer(values, cookies.token)
+      .then(() => {
+        alert(`Transfer completed.`);
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert('Something went wrong.');
+      });
   };
   return (
     <div>
