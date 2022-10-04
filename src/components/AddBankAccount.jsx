@@ -35,6 +35,7 @@ const AddBankAccount = () => {
       .createAccount(values, cookies.token)
       .then(() => {
         alert('Bank Account created successfully.');
+        window.location.reload();
       })
       .catch((err) => {
         alert('Something went wrong.');

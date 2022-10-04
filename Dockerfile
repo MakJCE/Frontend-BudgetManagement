@@ -13,14 +13,18 @@ COPY . /opt/app
 
 WORKDIR /opt/app
 
-ENV REACT_APP_API_URL=http://localhost:8500
+ENV REACT_APP_API_URL=http://34.173.193.2:8500/
 
 RUN npm install
 
 RUN npm run build
 
-FROM nginx:1.22.0-alpine
+FROM node:18.9.0
 
-COPY --from=compilacion /opt/app/build /usr/share/nginx/html
+COPY --from=compilacion /opt/app/build /opt/app/build
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /opt/app
+
+RUN npm install -g serve
+
+CMD ["serve", "-s", "build"]
